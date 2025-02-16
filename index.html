@@ -21,8 +21,8 @@
             const statusElement = document.getElementById("status");
 
             // For iOS devices (Universal Links or Custom URL scheme)
-            const iosScheme = "myapp://"; // Replace with your app's custom URL scheme or universal link
-            const androidPackage = "com.example.app"; // Replace with your app's package name
+            const iosScheme = "stcpaybh://"; // Replace with your app's custom URL scheme or universal link
+            const androidPackage = "com.viva.cash"; // Replace with your app's package name
 
             const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
             const isAndroid = /Android/.test(navigator.userAgent);
@@ -46,7 +46,7 @@
                             return;
                         }
                         statusElement.textContent = "App is not installed on iOS.";
-                        window.location.href = "https://apps.apple.com/app/idYOUR_APP_ID"; // Redirect to App Store
+                        window.location.href = "https://apps.apple.com/bh/app/stc-pay-bh/id1336421084"; // Redirect to App Store
                     }
                 });
 
@@ -57,7 +57,7 @@
                         return; // App opened successfully
                     }
                     statusElement.textContent = "App is not installed on iOS.";
-                    window.location.href = "https://apps.apple.com/app/idYOUR_APP_ID"; // Redirect to App Store
+                    window.location.href = "https://apps.apple.com/bh/app/stc-pay-bh/id1336421084"; // Redirect to App Store
                 }, 3000); // Increase timeout to 3 seconds
             } else if (isAndroid) {
                 // Attempt to open the app using an Intent (Android's deep linking method)
@@ -76,7 +76,7 @@
                         return; // App opened successfully
                     }
                     statusElement.textContent = "App is not installed on Android.";
-                    window.location.href = "https://play.google.com/store/apps/details?id=" + androidPackage; // Redirect to Play Store
+                    window.location.href = "https://play.google.com/store/apps/details?id=com.vivacash.sadad&hl=en"; // Redirect to Play Store
                 }, 3000); // Increase timeout to 3 seconds
             } else {
                 statusElement.textContent = "Unsupported platform.";
