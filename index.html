@@ -40,7 +40,7 @@
 
                 setTimeout(function () {
                     // If the app didn't open after a small timeout, assume it's not installed
-                    if (Date.now() - startTime < 2000) {
+                    if (Date.now() - startTime < 5000) {
                         statusElement.textContent = "App is not installed on iOS.";
                         window.location.href = "https://apps.apple.com/bh/app/stc-pay-bh/id1336421084"; // Redirect to App Store
                     }
