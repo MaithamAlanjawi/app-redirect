@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Redirect</title>
+</head>
+<body>
+  <button id="installButton">Open App</button>
+ 
+  <script>
+    document.getElementById('installButton').onclick = function() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      var appScheme = 'stcpaybh://'; // Custom iOS Scheme
+      var androidPackage = 'com.viva.cash'; // Android Package
+      var iosAppStoreLink = 'https://apps.apple.com/is/app/stc-pay-bh/id1336421084&ved=2ahUKEwjKisb4vseLAxU2m_0HHfHvJuIQFnoECBwQAQ&usg=AOvVaw1IgWvZBPLLhqvGD1B4mVrB';
+      var androidPlayStoreLink = 'https://play.google.com/store/apps/details?id=com.vivacash.sadad&hl=en';
+
+      // Check if the device is Android or iOS
+      if (/android/i.test(userAgent)) {
+        // For Android
+        var appLink = `intent://${androidPackage}#Intent;scheme=myapp;package=${androidPackage};end`;
+
+        // Try opening the app directly
+        window.location = appLink;
+
+        // Fallback if app is not installed (after a delay)
+        setTimeout(function() {
+          window.location = androidPlayStoreLink;
+        }, 1000);
+
+      } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+        // For iOS
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = appScheme;
+
+        document.body.appendChild(iframe);
+
+        // Fallback if app is not installed (after a delay)
+        setTimeout(function() {
+          window.location = iosAppStoreLink;
+        }, 1000);
+      } else {
+        alert("This is not a mobile device.");
+      }
+    };
+  </script>
+</body>
+</html>
