@@ -21,8 +21,8 @@
             const statusElement = document.getElementById("status");
 
             // For iOS devices (Universal Links or Custom URL scheme)
-            const iosScheme = "stcpaybh://"; // Replace with your app's custom URL scheme or universal link
-            const androidPackage = "com.viva.cash"; // Replace with your app's package name
+            const iosScheme = "stcpaybh://";
+            const androidPackage = "com.viva.cash";
 
             const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
             const isAndroid = /Android/.test(navigator.userAgent);
@@ -42,7 +42,7 @@
                     const elapsedTime = Date.now() - startTime;
 
                     // If the elapsed time is less than 3 seconds, it indicates that the app has likely been opened
-                    if (elapsedTime < 3000) {
+                    if (elapsedTime < 10000) {
                         statusElement.textContent = "App is installed on iOS!";
                         return;
                     }
