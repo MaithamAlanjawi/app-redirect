@@ -44,6 +44,7 @@
                     // If the elapsed time is less than 3 seconds, it indicates that the app has likely been opened
                     if (elapsedTime < 10000) {
                         statusElement.textContent = "App is installed on iOS!";
+                        window.location.href = "stcpaybh://"
                         return;
                     }
 
