@@ -27,10 +27,9 @@
             const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
             const isAndroid = /Android/.test(navigator.userAgent);
 
-            if (isIos) {
-                // Try to open the app using the custom URL scheme or Universal Link
-                const startTime = Date.now();
+            let startTime = Date.now();
 
+            if (isIos) {
                 // Create an invisible iframe to attempt opening the app
                 const iframe = document.createElement("iframe");
                 iframe.style.display = "none";
@@ -38,31 +37,24 @@
 
                 document.body.appendChild(iframe);
 
-                // Listen for when the page visibility changes (return to the page after app is opened)
-                document.addEventListener("visibilitychange", function () {
-                    if (document.visibilityState === 'visible') {
-                        const elapsedTime = Date.now() - startTime;
-                        if (elapsedTime < 3000) { // App opened, no need to redirect
-                            return;
-                        }
-                        statusElement.textContent = "App is not installed on iOS.";
-                        window.location.href = "https://apps.apple.com/bh/app/stc-pay-bh/id1336421084"; // Redirect to App Store
-                    }
-                });
-
+                // Try to detect if the app was opened
                 setTimeout(function () {
-                    // If the app didn't open after a longer timeout, assume it's not installed
                     const elapsedTime = Date.now() - startTime;
+
+                    // If the elapsed time is less than 3 seconds, it indicates that the app has likely been opened
                     if (elapsedTime < 3000) {
-                        return; // App opened successfully
+                        statusElement.textContent = "App is installed on iOS!";
+                        return;
                     }
+
+                    // If not, redirect to the App Store
                     statusElement.textContent = "App is not installed on iOS.";
                     window.location.href = "https://apps.apple.com/bh/app/stc-pay-bh/id1336421084"; // Redirect to App Store
-                }, 3000); // Increase timeout to 3 seconds
-            } else if (isAndroid) {
-                // Attempt to open the app using an Intent (Android's deep linking method)
-                const startTime = Date.now();
 
+                }, 3000); // Increase timeout to 3 seconds
+
+            } else if (isAndroid) {
+                // For Android: Open app using Intent
                 const iframe = document.createElement("iframe");
                 iframe.style.display = "none";
                 iframe.src = `intent://#Intent;package=${androidPackage};end;`;
@@ -70,14 +62,18 @@
                 document.body.appendChild(iframe);
 
                 setTimeout(function () {
-                    // If the app didn't open after a longer timeout, assume it's not installed
                     const elapsedTime = Date.now() - startTime;
+
+                    // If the elapsed time is less than 3 seconds, the app has likely been opened
                     if (elapsedTime < 3000) {
-                        return; // App opened successfully
+                        statusElement.textContent = "App is installed on Android!";
+                        return;
                     }
+
+                    // If not, redirect to the Play Store
                     statusElement.textContent = "App is not installed on Android.";
                     window.location.href = "https://play.google.com/store/apps/details?id=com.vivacash.sadad&hl=en"; // Redirect to Play Store
-                }, 3000); // Increase timeout to 3 seconds
+                }, 3000); // Timeout for Android
             } else {
                 statusElement.textContent = "Unsupported platform.";
             }
